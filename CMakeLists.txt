@@ -1,19 +1,3 @@
-# Copyright (C) 2006 MySQL AB
-# 
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; version 2 of the License.
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
-INCLUDE (CheckCXXSourceCompiles)
 CHECK_CXX_SOURCE_COMPILES(
 "#include <boost/version.hpp>
 #if BOOST_VERSION >= 104000
@@ -23,15 +7,14 @@ CHECK_CXX_SOURCE_COMPILES(
 int main() { return 0; }" BOOST_OK)
 
 IF(BOOST_OK)
-  INCLUDE("${PROJECT_SOURCE_DIR}/storage/mysql_storage_engine.cmake")
+  ADD_DEFINITIONS(-DHAVE_OQGRAPH)
+  IF(MSVC)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
+  ENDIF(MSVC)
 
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DHAVE_OQGRAPH /EHsc")
-
-  INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/sql
-                      ${CMAKE_SOURCE_DIR}/regex
-                      ${CMAKE_SOURCE_DIR}/extra/yassl/include)
-
+  SET(OQGRAPH_PLUGIN_STATIC  "oqgraph")
+  SET(OQGRAPH_PLUGIN_DYNAMIC "ha_oqgraph")
   SET(OQGRAPH_SOURCES ha_oqgraph.cc graphcore.cc)
-  MYSQL_STORAGE_ENGINE(OQGRAPH)
-ENDIF()
-
+  MYSQL_ADD_PLUGIN(oqgraph ${OQGRAPH_SOURCES} STORAGE_ENGINE)
+ENDIF(BOOST_OK)
+#error same fix here as in plugin.m4
