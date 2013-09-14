@@ -32,15 +32,13 @@ NULL	1	4	1	NULL	NULL
 NULL	4	1	1	NULL	NULL
 NULL	3	4	1	NULL	NULL
 NULL	4	3	1	NULL	NULL
-SELECT * FROM graph WHERE destid=2 and origid=1;
+SELECT * FROM graph WHERE latch='1' and destid=2 and origid=1;
 latch	origid	destid	weight	seq	linkid
-NULL	1	2	1	NULL	NULL
-alter table graph ORIGID = 'another_id';
-ERROR HY000: Storage engine OQGRAPH of the table `test`.`graph` doesn't have this option
-alter table graph ORIGID = 'something_else';
-ERROR HY000: Storage engine OQGRAPH of the table `test`.`graph` doesn't have this option
-DELETE FROM graph_base;
-FLUSH TABLES;
-TRUNCATE TABLE graph_base;
-DROP TABLE graph_base;
+1	1	2	NULL	0	1
+1	1	2	1	1	2
+SELECT * FROM graph WHERE latch='1' and destid=2 and origid=1 order by seq;
+latch	origid	destid	weight	seq	linkid
+1	1	2	NULL	0	1
+1	1	2	1	1	2
 DROP TABLE graph;
+DROP TABLE graph_base;
