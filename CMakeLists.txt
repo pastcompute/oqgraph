@@ -1,3 +1,5 @@
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 MESSAGE(STATUS "Configuring OQGraph")
 FIND_PACKAGE(Boost)
 IF(NOT Boost_FOUND)
@@ -9,17 +11,7 @@ INCLUDE_DIRECTORIES(BEFORE ${Boost_INCLUDE_DIRS})
 FIND_PACKAGE(Judy)
 IF(NOT Judy_FOUND)
   MESSAGE(STATUS "Judy not found")
-  include(ExternalProject)
-  ExternalProject_Add(
-    Judy
-    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Judy
-    CONFIGURE_COMMAND sh bootstrap && sh configure --with-pic --disable-shared
-    UPDATE_COMMAND ""
-    INSTALL_COMMAND ""
-    BUILD_IN_SOURCE 1
-  )
-  SET(Judy_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/Judy/src/obj/.libs/libJudy.a)
-  SET(Judy_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Judy/src)
+  RETURN()
 ENDIF()
 INCLUDE_DIRECTORIES(${Judy_INCLUDE_DIR})
 
