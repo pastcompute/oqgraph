@@ -21,6 +21,10 @@ Prerequisites
 
 OQGraph requires at least version 1.40.0 of the Boost library. To
 obtain a copy of the Boost library, see http://www.boost.org/
+This can be obtained in Debian Wheezy by `apt-get install libboost-graph-dev`
+
+OQGraph requires libjudy - http://judy.sourceforge.net/
+This can be obtained in Debian Wheezy by `apt-get install libjudy-dev`
 
 MariaDB and Releases
 ====================
