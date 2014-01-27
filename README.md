@@ -45,11 +45,10 @@ Install Example:
 
 1. Follow the instructions from the MariaDB wiki
 2. Before running cmake, do the following:
-```
-cd storage
-rm -rf oqgraph
-git clone https://github.com/andymc73/oqgraph
-```
+
+        cd storage
+        rm -rf oqgraph
+        git clone https://github.com/andymc73/oqgraph
 3. Continue with cmake, etc.
 
 Rationale
