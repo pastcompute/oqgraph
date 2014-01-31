@@ -47,13 +47,27 @@ for subsequent merging into MariaDB.
 Install Example:
 ================
 
-1. Follow the instructions from the MariaDB wiki
+1. Follow the instructions from the MariaDB wiki (for example) or unpack a MariaDB source distribution.
 2. Before running cmake, do the following:
 
         cd storage
         rm -rf oqgraph
         git clone https://github.com/andymc73/oqgraph
 3. Continue with cmake, etc.
+
+Simple Build Instructions:
+==========================
+
+The generic method used to build MariaDB from source for basic regression testing of OQGraph v3:
+
+        cd path/to/maria/source
+        mkdir build   # use symlink to scratch
+        cd build    
+        CONFIGURE="-DWITH_EXTRA_CHARSETS=complex -DWITH_PLUGIN_ARIA=1 -DWITH_READLINE=1 -DWITH_SSL=bundled -DWITH_MAX=1 -DWITH_EMBEDDED_SERVER=1"
+        cmake .. $CONFIGURE     
+        make -j5     # <-- I tend to use number of cores+1
+        mysql-test-run --suite oqgraph
+
 
 Rationale
 =========
