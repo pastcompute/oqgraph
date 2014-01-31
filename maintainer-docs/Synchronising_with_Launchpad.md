@@ -26,25 +26,35 @@ One off commands:
 
         cd path/to/bzr-git/oqgraph-maintenance
         git remote add standalone path/to/github/clone
+        git checkout master
+        git checkout -b github-patches-applied
         git fetch standalone master:standalone
+
+To ease later commits we probably need to make another tracking branch:
+
+        git branch github-tracking standalone/baseline
 5. Determine the range of commits since the last merge of changes.
 
 For convenience, add a tag, for example, if there are four new commits since the last merge to the bzr-git clone:
 
         git fetch standalone master:standalone
-        git tag oqgraph-standalone-baseline standalone^^^^
+
 6. Apply patches and add as needed.
 
         cd storage/oqgraph
         git checkout master
-        git checkout -b github-patches-applied
-        git diff --stat  oqgraph-standalone-baseline..standalone
-        git diff oqgraph-standalone-baseline..standalone | git apply --directory=storage/oqgraph -
+        git checkout github-patches-applied
+        git diff --stat github-tracking..standalone
+        git diff github-tracking..standalone | git apply --directory=storage/oqgraph -
         
         # rebuild & regression test here
         
         git add -p # as required
         git commit -m "msg" # as required 
+        
+        # advance github-tracking
+        git rebase standalone github-tracking
+        git checkout github-patches-applied
 It would probably be useful to ignore `README.md`, `github/` and `.gitignore` at this point.
 7. Merge back to the bzr-git master - after testing nothing broke!
 
