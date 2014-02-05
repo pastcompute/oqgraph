@@ -46,7 +46,8 @@ For convenience, add a tag, for example, if there are four new commits since the
         cd storage/oqgraph
         git diff --stat github-tracking..standalone
         # It may be necessary to use --reject as well ...
-        git diff github-tracking..standalone | git apply --directory=storage/oqgraph --exclude=storage/oqgraph/README.md --exclude=storage/oqgraph/.gitignore -
+        git diff github-tracking..standalone | git apply --directory=storage/oqgraph \
+            --exclude=storage/oqgraph/README.md --exclude=storage/oqgraph/.gitignore --exclude=storage/oqgraph/maintainer-docs -
         
         # rebuild & regression test here
         
