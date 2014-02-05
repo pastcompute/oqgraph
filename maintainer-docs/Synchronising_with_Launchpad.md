@@ -41,11 +41,12 @@ For convenience, add a tag, for example, if there are four new commits since the
 
 6. Apply patches and add as needed.
 
-        cd storage/oqgraph
         git checkout master
         git checkout github-patches-applied
+        cd storage/oqgraph
         git diff --stat github-tracking..standalone
-        git diff github-tracking..standalone | git apply --directory=storage/oqgraph -
+        # It may be necessary to use --reject as well ...
+        git diff github-tracking..standalone | git apply --directory=storage/oqgraph --exclude=storage/oqgraph/README.md --exclude=storage/oqgraph/.gitignore -
         
         # rebuild & regression test here
         
@@ -55,14 +56,14 @@ For convenience, add a tag, for example, if there are four new commits since the
         # advance github-tracking
         git rebase standalone github-tracking
         git checkout github-patches-applied
-It would probably be useful to ignore `README.md`, `github/` and `.gitignore` at this point.
+It would probably be useful to ignore `README.md`, `maintainer-docs/` and `.gitignore` at this point.
 7. Merge back to the bzr-git master - after testing nothing broke!
 
         git checkout master
         git merge github-patches-applied
 8. Push back to bzr
 
-        git pull # <-- make sure upstream changes merge properly
+        git pull origin master # <-- make sure upstream changes merge properly
         
         # rebuild & regression test here
         
