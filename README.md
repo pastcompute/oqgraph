@@ -1,6 +1,8 @@
 OQGraph storage engine v3
 =========================
 
+IMPORTANT - this is NOT the official release of OQGraph. (see below)
+
 Copyright (C) 2007-2014 Arjen G Lentz & Antony T Curtis for Open Query, & Andrew McDonnell
 
 The Open Query GRAPH engine (OQGRAPH) is a computation engine allowing
@@ -29,20 +31,18 @@ This can be obtained in Debian Wheezy by `apt-get install libjudy-dev`
 MariaDB and Releases
 ====================
 
-This tree is just the source code for a MariaDB storage engine. It is not overly useful by itself.
+This tree is just a snapshot of the source code for a MariaDB storage engine. It is not overly useful by itself.
+It primarily exists for visualising OQGraph code without the entirety of MariaDB, and was created as an 
+exercise in advanced git manipulation as documented at http://blog.oldcomputerjunk.net/2014/launchpad-to-github-round-trip-save-5-giabytes-on-the-way/
 To use, obtain a recent copy of MariaDB 10 (>= 10.0.7) and replace the contents of the directory
 `storage/oqgraph/` with this soure code, then rebuild MariaDB.
 
+MariaDB itself is now hosted (for >= 10.1.0) at https://github.com/MariaDB/server
+For the time being, 10.0.7+ is still hosted at https://launchpad.net/maria using bzr.
+
+The MariaDB sources contain the official OQGraph v3 at that location (`storage/oqgraph/`).
 One way to build MariaDB from source is described at https://mariadb.com/kb/en/compiling-mariadb-from-source/
 
-Note that as of January 2014, the official MariaDB >= 10.0.7 source contains OQGraph v3 at that 
-location (`storage/oqgraph/`) corresponding to the GitHub git tag `oqgraph-mariadb-10.0.7-git-tracking-base`
-
-Officially MariaDB is hosted at https://launchpad.net/maria using bzr.
-
-When important bugs are fixed or features completed, the commits to this code will be pushed back to the oqgraph
-maintenance branch https://code.launchpad.net/~andymc73/maria/oqgraph-maintenance directory `storage/oqgraph`
-for subsequent merging into MariaDB.
 
 Install Example:
 ================
@@ -71,10 +71,7 @@ The generic method used to build MariaDB from source for basic regression testin
 
 Rationale
 =========
-
-* Although a migration to github is in the works (https://mariadb.atlassian.net/browse/MDEV-5240), 
-  MariaDB is hosted on LaunchPad, which uses bzr
-* The full MariaDB history exceeds 80000 commits and in git form the .git directory exceeds 5GB. The full history
+* The full MariaDB history exceeds 80000 commits and takes several seconds to load in `gitg`. The full history
   for OQGraph v3 is only ~1 MB...
-* Maintaining a standalone tree of the storage engine will allow us to consider backports to other versions of MariaDB
+* Developing a "standalone-able" tree of the storage engine may allow us to consider backports to other versions of MariaDB or other systems in the future
 
